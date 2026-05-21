@@ -1,0 +1,12 @@
+[
+  {
+    "name": "cloud1",
+    "repo": "cocodekat/cloud1",
+    "token": "your_token"
+  },
+  {
+    "name": "source",
+    "repo": "cocodekat/cloud",
+    "token": "your_token"
+  }
+]
