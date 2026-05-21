@@ -1,0 +1,100 @@
+# ☁ cloud.py — GitHub-powered personal cloud
+
+Store, browse, and retrieve files across GitHub repos from your terminal.
+
+---
+
+## Setup
+
+**1. Install the only dependency**
+```bash
+pip install requests
+```
+
+**2. Edit `list.json`** — add your repos:
+```json
+[
+  {
+    "name": "myrepo",
+    "repo": "yourusername/your-repo-name",
+    "token": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  }
+]
+```
+
+**3. Get a GitHub token**
+- Go to https://github.com/settings/tokens
+- Click **Generate new token (classic)**
+- Tick the `repo` scope
+- Copy the token into `list.json`
+
+> ⚠️ Keep `list.json` private — it contains your tokens. Add it to `.gitignore` if needed.
+
+---
+
+## Commands
+
+### Upload a file
+```bash
+python cloud.py upload ./test.py myrepo
+```
+Uploads `test.py` to the root of `myrepo`.
+
+### Upload a folder
+```bash
+python cloud.py upload ./src myrepo
+```
+Uploads the entire `src/` folder, preserving its structure inside the repo.
+
+### List files
+```bash
+python cloud.py list myrepo
+python cloud.py list myrepo src/
+```
+Lists all files (recursively) at the root or a given subfolder.
+
+### Fetch a file
+```bash
+python cloud.py fetch myrepo test.py
+```
+Downloads `test.py` to your current directory.
+
+### Fetch a folder
+```bash
+python cloud.py fetch myrepo src/
+```
+Downloads the `src/` folder and all its contents recursively.
+
+### Show configured repos
+```bash
+python cloud.py repos
+```
+
+---
+
+## Optional: make it a global command
+
+**Linux / macOS**
+```bash
+chmod +x cloud.py
+sudo ln -s "$(pwd)/cloud.py" /usr/local/bin/cloud
+```
+Then just use: `cloud upload ./test.py myrepo`
+
+**Windows** — add the folder to your PATH, or create a `cloud.bat`:
+```bat
+@echo off
+python "C:\path\to\cloud.py" %*
+```
+
+---
+
+## list.json format
+
+| Field   | Description                              |
+|---------|------------------------------------------|
+| `name`  | Short alias used in CLI commands         |
+| `repo`  | Full GitHub repo path: `owner/reponame`  |
+| `token` | GitHub personal access token             |
+
+You can add as many repos as you like.
